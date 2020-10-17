@@ -1,82 +1,106 @@
-#PARCIAL 1
-#Byron Daniel Ramirez Tebalan 999003721
+#Examen FInal 
+#BYRON DANIEL RAMÍREZ TEBALÁN
+#999003721
 
-airquality
-#Pregunta 1
-#Utilizando el conjunto de datos "airquality" ¿Cuál es la media, mediana y moda de la variable Temp?
-summary(airquality)
-mean(airquality$Temp)
-median(airquality$Temp, na.rm = TRUE)
-library(modeest)
-mfv(airquality$Temp)
+#Pregunta 11 y 12
+# Se desea estimar con un nivel de confianza del 95 % la talla media de los hombres de 18 o más años de un país
+media <- 173.47
+n <-15
+desv <- 4
+alfa <- 0.05/2
+nivelconfianza<- 1-alfa
 
+normal<- qnorm(nivelconfianza,0,1)
+normal
 
-#Pregunta 2
-#Utilizando el conjunto de datos "airquality" grafique el histograma de la variable Ozono e indique qué tipo de asimetría tiene
-plot(airquality$Ozone)
-hist(x = airquality$Ozone)
+error<-  desv/sqrt(n)
+error
+margen <- normal*error
+margen
 
-#Pregunta 3
-#Utilizando el conjunto de datos "airquality" ¿Cuál es la media, mediana y moda de la variable Wind?
-summary(airquality)
-mean(airquality$Wind)
-median(airquality$Wind)
-mfv(airquality$Wind)
-
-#Pregunta 4
-#Utilizando el conjunto de datos "airquality" calcule el grado de simetría de la variable SolarR. ¿Qué significa el valor de su simetría?
-library(psych)
-table(airquality$Solar.R)
-skew(airquality$Solar.R)
-
-#Pregunta 5
-#Utilizando el conjunto de datos "airquality" indique qué desviación estándar es más adecuada. ¿La de Wind o la de Ozono?
-sd(airquality$Ozone, na.rm = TRUE)
-sd(airquality$Wind, na.rm = TRUE)
+limInf<- media - margen
+limsup <- media +margen
+limInf
+limsup
 
 
+#Pregunta 13
+media <- 173.47
+n <-15
+desv <- 4
+alfa <- 0.2/2
+nivelconfianza<- 1-alfa
 
-#GRAFICAS
-#PARTE 2 - PARCIAL 1
-library(ggplot2)
+normal<- qnorm(nivelconfianza,0,1)
+normal
 
-diamonds
-plot(x=diamonds$carat, y=diamonds$price)
-ggplot(data = diamonds, aes(x = carat, y = price)) + 
-  geom_boxplot(aes(color = carat), alpha = 0.7) + 
-  theme_minimal()
+error<-  desv/sqrt(n)
+error
+margen <- normal*error
+margen
 
+#Pregunta 18
+#Ho: u >= 800
+#H1: u <= 800
 
-hist(diamonds$carat)
-ggplot(diamonds) +
-  geom_histogram(binwidth = 1, aes(x = carat), fill = 'steelblue') + 
-  theme_minimal()
+alfa <- 0.01
+n=50
+media= 750
+sd= 120
+mu= 800
 
-plot(x=diamonds$carat, y=diamonds$price, main = "carat", xlab = "carat", ylab = "price")
-       
-plot(x=diamonds$color)
+#¿Cuál es el valor del estadístico de prueba? 
+z0<- (media-mu)/(sd/sqrt(n))
+z0
 
+zAlfa<- qnorm(alfa,0,1, lower.tail = TRUE)
+zAlfa
 
-
-#PROBABILIDAD
-#PARTE 3 - PARCIAL 1
-
-xpoisson= 1:24
-lambda= 20
-distpoison <- dpois(1:24, 20)
-distpoison
-
-dpois(1:24,20)
-ppois(24,20)
-barplot(distpoison)
-plot(xpoisson, distpoison, type = "h", col=c("orange", "yellow", "gray"), xlab = xpoisson)
+z0 <  zAlfa
 
 
+#Pregunta 20
+#La St. Louis Metro Bus Company de Estados Unidos, desea dar una imagen de confiabilidad haciendo que sus conductores sean puntuales en los horarios de llegada a las paradas. La empresa desea que haya poca variabilidad en dichos tiempos. 
+#h0: sigma<=4
+#h1: sigma > 4
 
-#sesgo 
-n= 20
-p= 0.6
-x=0:n; 
-prob=dbinom(x,n,p);
-prob
-barplot(prob, main = "distribucion binomial sesgo positivo", names.arg = x)
+n= 24
+s2 <- 4.9
+sigma20<- 4
+alfa <- 0.05
+
+
+#Pregunta 21
+#¿Cuál es el valor de chi-cuadrado?
+chi_sd<- qchisq(1- alfa, n-1)
+chi_sd
+
+#Pregunta 22
+#Estadistico
+X2 <- ((n-1)*s2)/sigma20
+X2
+
+#Pregunta 24
+#¿Se rechaza o se acepta la H0?
+X2> chi_sd
+
+
+#Pregunta 25
+#volumen (x) Height(y) 
+data(trees)
+lm.trees <- lm(Height~Volume, data=trees)
+summary (lm.trees)
+
+#Pregunta 26, 27 y 28
+#volumen (x) Girth(y) 
+data(trees)
+lm.trees1 <- lm(Girth~Volume, data=trees)
+summary (lm.trees1)
+
+#Pregunta 29
+#volumen (x) Girth(y) 
+plot (trees$Girth ~trees$Volume)
+abline (lm.trees1)
+
+
+
